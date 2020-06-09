@@ -7,6 +7,9 @@
 	#define DLL _declspec(dllexport)
 #endif
 
+#define GenCallableFromMethod(x) std::bind(x,this,std::placeholders::_1)
+
+
 //This New Is Used Only For Debugging Purposes Set The Debugging Flag For The Event System To Use This...
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -19,3 +22,4 @@
 #endif
 
 #define LogBuffer(x) std::cout<<x<<std::endl;
+
