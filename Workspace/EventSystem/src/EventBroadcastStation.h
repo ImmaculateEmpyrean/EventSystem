@@ -21,8 +21,6 @@
 
 namespace ErmineEventSystem
 {
-	class BroadcastComponent; //Forward Declared This Class So As To Make It Friend Of The ErmineBroadcastStation Class...
-
 	// Note - This is a Singleton Class Residing On a Seperate Thread Please See That You Take Care Of All Design Considerations...
 	class EventBroadcastStation
 	{
@@ -32,14 +30,12 @@ namespace ErmineEventSystem
 
 		static EventBroadcastStation* EventBroadcastStationPointer;
 		static std::once_flag LazyInitializationFlag;
+		static std::thread* StationThreadObject;
+	public:
+		static std::atomic<bool> StationDestructionOrdered; //This Flag Is Set Public Because There are some people who would like to know if god has been destroyed
 
-	private:
-		//This Section Contains an assortments of locks
-		//static std::mutex GetStationLock; 
 	public:
 		static std::mutex MainMutex;
-		//std::mutex QueueBroadcastLock;
-		//std::mutex QueueSubscriptionLock;
 
 	public:
 		static EventBroadcastStation* GetStation(); //This is a static method and will allow the user to get a line with the station in question
@@ -80,8 +76,7 @@ namespace ErmineEventSystem
 		void DispatchCursorPositionCallbackMessages();
 		void DispatchMouseButtonCallbackMessages();
 		void DispatchScrollCallbackMessages();
-		
-		//friend class BroadcastComponent;
+
 	};
 
 }

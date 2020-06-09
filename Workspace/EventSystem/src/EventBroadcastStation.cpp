@@ -2,21 +2,18 @@
 
 ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStation::EventBroadcastStationPointer = nullptr; //Note The Broadcast Station is not initialized
 std::once_flag ErmineEventSystem::EventBroadcastStation::LazyInitializationFlag;
-
-//std::mutex Ermine::EventBroadcastStation::GetStationLock;
+std::atomic<bool> ErmineEventSystem::EventBroadcastStation::StationDestructionOrdered = false;
+std::thread* ErmineEventSystem::EventBroadcastStation::StationThreadObject;
 std::mutex ErmineEventSystem::EventBroadcastStation::MainMutex;
 
 void EventBroadcastStationMainRoutine()
 {
 	_sleep(1000);
 
-	while (true)
+	while (ErmineEventSystem::EventBroadcastStation::StationDestructionOrdered == false)
 	{
 		//Remove The comments For Event Processing To Resume Normally..
-
 		_sleep(100);
-		//std::lock_guard<std::mutex> Loc(Ermine::EventBroadcastStation::MainMutex);//,std::adopt_lock);
-		//std::cout << "Woke up from Sleep" << std::endl;
 		auto Station = ErmineEventSystem::EventBroadcastStation::GetStation();
 		Station->DispatchMessages();
 	}
@@ -24,9 +21,7 @@ void EventBroadcastStationMainRoutine()
 
 
 ErmineEventSystem::EventBroadcastStation::~EventBroadcastStation()
-{
-	
-}
+{}
 
 ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStation::GetStation()
 {
@@ -34,8 +29,9 @@ ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStati
 	
 	std::call_once(LazyInitializationFlag, []() {
 		EventBroadcastStationPointer = DBG_NEW EventBroadcastStation(); //Create A New event Broadcast Station..
-		std::thread NewThreadObject(EventBroadcastStationMainRoutine);
-		NewThreadObject.detach(); //This Will Run Indefinitely I Guess No Need To Bother about It I think
+		StationThreadObject = new std::thread(EventBroadcastStationMainRoutine);
+		//std::thread NewThreadObject(EventBroadcastStationMainRoutine);
+		//NewThreadObject.detach(); //This Will Run Indefinitely I Guess No Need To Bother about It I think
 	});
 
 	std::unique_lock<std::mutex> Loc(MainMutex);//,std::adopt_lock);
@@ -44,6 +40,10 @@ ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStati
 
 void ErmineEventSystem::EventBroadcastStation::DestroyStation()
 {
+	StationDestructionOrdered = true;
+	StationThreadObject->join();
+
+	delete StationThreadObject;
 	delete EventBroadcastStationPointer;
 }
 
