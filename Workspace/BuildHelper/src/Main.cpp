@@ -24,7 +24,7 @@ int main()
 	//Ended Call Which Example You Want Here//
 	
 	ErmineEventSystem::EventBroadcastStation::DestroyStation(); //:> Forgot To Destroy The Station After Use.. Previously
-	
+		
 	//Start Print Detected Memory Leaks To File..
 	FILE* pFile;
 	freopen_s(&pFile, "MemoryLeakLog.txt", "w", stdout);
@@ -32,5 +32,4 @@ int main()
 	_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
 	_CrtDumpMemoryLeaks(); fclose(pFile);
 	//Ended Print Detected Memory Leaks To File..
-	
 }
