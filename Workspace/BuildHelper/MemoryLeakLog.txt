@@ -1,49 +1,17 @@
 Detected memory leaks!
 Dumping objects ->
-{145} normal block at 0x000001D2B5273AA0, 400 bytes long.
+{145} normal block at 0x00000144DC203AA0, 400 bytes long.
  Data: <                > CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD 
-{137} normal block at 0x000001D2B526FFE0, 56 bytes long.
- Data: < l[             > A8 6C 5B AE F7 7F 00 00 00 00 00 00 00 00 00 00 
-{136} normal block at 0x000001D2B526E240, 48 bytes long.
+{136} normal block at 0x00000144DC1FE1D0, 48 bytes long.
  Data: <This Message Is > 54 68 69 73 20 4D 65 73 73 61 67 65 20 49 73 20 
-{135} normal block at 0x000001D2B526EBF0, 16 bytes long.
- Data: <H &             > 48 E9 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{132} normal block at 0x000001D2B526E940, 56 bytes long.
- Data: < l[       &     > A8 6C 5B AE F7 7F 00 00 F0 EB 26 B5 D2 01 00 00 
-{128} normal block at 0x000001D2B526F860, 72 bytes long.
- Data: <@ [     Xj[     > 40 87 5B AE F7 7F 00 00 58 6A 5B AE F7 7F 00 00 
-{127} normal block at 0x000001D2B526E8B0, 80 bytes long.
- Data: < l[     d O A   > D0 6C 5B AE F7 7F 00 00 64 F6 4F AA 41 00 00 00 
-{126} normal block at 0x000001D2B526F7D0, 72 bytes long.
- Data: <@ [     Xj[     > 40 87 5B AE F7 7F 00 00 58 6A 5B AE F7 7F 00 00 
-{124} normal block at 0x000001D2B526E820, 80 bytes long.
- Data: < l[     d O A   > D0 6C 5B AE F7 7F 00 00 64 F6 4F AA 41 00 00 00 
-{122} normal block at 0x000001D2B526ED80, 8 bytes long.
- Data: <f 8     > 66 90 38 AE F7 7F 00 00 
-{121} normal block at 0x000001D2B526EB00, 16 bytes long.
- Data: <0 &             > 30 F3 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{120} normal block at 0x000001D2B526EAB0, 16 bytes long.
- Data: <  &             > 10 F3 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{119} normal block at 0x000001D2B526EA60, 16 bytes long.
- Data: <  &             > F0 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{118} normal block at 0x000001D2B526EA10, 16 bytes long.
- Data: <  &             > D0 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{117} normal block at 0x000001D2B526EEC0, 16 bytes long.
- Data: <  &             > B0 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{116} normal block at 0x000001D2B526F140, 16 bytes long.
- Data: <  &             > 90 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{115} normal block at 0x000001D2B526F0A0, 16 bytes long.
- Data: <p &             > 70 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{114} normal block at 0x000001D2B526F0F0, 16 bytes long.
- Data: <P &             > 50 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{113} normal block at 0x000001D2B526F050, 16 bytes long.
- Data: <0 &             > 30 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{112} normal block at 0x000001D2B526EC40, 16 bytes long.
- Data: <  &             > 10 F2 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{111} normal block at 0x000001D2B526F000, 16 bytes long.
- Data: <  &             > F0 F1 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{110} normal block at 0x000001D2B526EBA0, 16 bytes long.
- Data: <  &             > D0 F1 26 B5 D2 01 00 00 00 00 00 00 00 00 00 00 
-{109} normal block at 0x000001D2B526F1D0, 384 bytes long.
- Data: <  &       &     > A0 EB 26 B5 D2 01 00 00 E0 FF 26 B5 D2 01 00 00 
+{135} normal block at 0x00000144DC1FECE0, 16 bytes long.
+ Data: <H   D           > 48 E9 1F DC 44 01 00 00 00 00 00 00 00 00 00 00 
+{132} normal block at 0x00000144DC1FE940, 56 bytes long.
+ Data: < l          D   > A8 6C 85 C9 F6 7F 00 00 E0 EC 1F DC 44 01 00 00 
+{126} normal block at 0x00000144DC1FF7D0, 72 bytes long.
+ Data: <@       Xj      > 40 87 85 C9 F6 7F 00 00 58 6A 85 C9 F6 7F 00 00 
+{124} normal block at 0x00000144DC1FE820, 80 bytes long.
+ Data: < l          $   > D0 6C 85 C9 F6 7F 00 00 B4 F4 BC F9 24 00 00 00 
+{122} normal block at 0x00000144DC1FEBF0, 8 bytes long.
+ Data: <f b     > 66 90 62 C9 F6 7F 00 00 
 Object dump complete.

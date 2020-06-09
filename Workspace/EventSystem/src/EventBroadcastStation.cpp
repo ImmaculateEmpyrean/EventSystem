@@ -23,6 +23,11 @@ void EventBroadcastStationMainRoutine()
 }
 
 
+ErmineEventSystem::EventBroadcastStation::~EventBroadcastStation()
+{
+	
+}
+
 ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStation::GetStation()
 {
 	//std::lock_guard<std::mutex> GetStationLockGaurd(GetStationLock); //This Ensures Only One Thread Can Access The Retuen At a Given Time
@@ -37,22 +42,16 @@ ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStati
 	return EventBroadcastStationPointer;
 }
 
+void ErmineEventSystem::EventBroadcastStation::DestroyStation()
+{
+	delete EventBroadcastStationPointer;
+}
+
 void ErmineEventSystem::EventBroadcastStation::QueueBroadcast(std::unique_ptr<Event> BroadcastPackage)
 {
 	std::unique_lock<std::mutex> Loc(MainMutex);//, std::adopt_lock);//std::lock_guard<std::mutex> Loc(MainMutex,std::adopt_lock);
 
 	ErmineEventSystem::EventType BroadcastType = BroadcastPackage->GetEventType();
-#pragma region OldWay
-	/*if (BroadcastType == EventType::ConcreteEvent)
-	{
-		std::lock_guard<std::mutex> Loc(MainMutex, std::adopt_lock);
-		ConcreteEventsQueue.push_back(*((ConcreteEvent*)(BroadcastPackage.release())));
-	}
-
-	else
-		std::cout << "Unkown Type Got" << std::endl;*/
-#pragma endregion OldWay
-
 	switch(BroadcastType)
 	{
 	case EventType::ConcreteEvent:ConcreteEventsQueue.push_back(*((ConcreteEvent*)(BroadcastPackage.release())));
@@ -73,22 +72,6 @@ void ErmineEventSystem::EventBroadcastStation::QueueBroadcast(std::unique_ptr<Ev
 
 void ErmineEventSystem::EventBroadcastStation::QueueSubscription(std::unique_ptr<EventSubscription> Subscription)
 {
-#pragma region OldWayOfImplementation
-	/*auto SubscriptionType = Subscription->GetEventSubscriptionType();
-	if (SubscriptionType == EventType::ConcreteEvent)
-	{
-		std::lock_guard<std::mutex> Loc(MainMutex, std::adopt_lock);
-		ConcreteEventSubscriptions.push_back(*((ConcreteEventSubscription*)(Subscription.release())));
-	}
-	else if (SubscriptionType == EventType::KeyCallbackEvent)
-	{
-		std::lock_guard<std::mutex> Loc(MainMutex, std::adopt_lock);
-		KeyCallbackEventsSubscriptions.push_back(*((KeyCallbackEventSubscription*)(Subscription.release())));
-	}
-	else
-		std::cout << "Unkown Type Got" << std::endl;*/
-#pragma endregion OldWayofImplementation
-	
 	std::unique_lock<std::mutex> Loc(MainMutex);//, std::adopt_lock);//std::lock_guard<std::mutex> Loc(MainMutex, std::adopt_lock);
 	auto SubscriptionType = Subscription->GetEventSubscriptionType();
 	

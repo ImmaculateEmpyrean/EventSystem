@@ -28,6 +28,8 @@ namespace ErmineEventSystem
 	{
 	private:
 		EventBroadcastStation() = default; //Dont Think we Would Need a Custom Constructor Yet
+		~EventBroadcastStation(); //A Destructor to avoid detecting memory leaks when the program closes besides its good practice right 
+
 		static EventBroadcastStation* EventBroadcastStationPointer;
 		static std::once_flag LazyInitializationFlag;
 
@@ -41,6 +43,8 @@ namespace ErmineEventSystem
 
 	public:
 		static EventBroadcastStation* GetStation(); //This is a static method and will allow the user to get a line with the station in question
+		static void DestroyStation(); //This is a static method and will allow the user to Destroy the station in question
+
 		void DispatchMessages(); //This Will Trigger Delievery of Messages //Note Lock Mutexes Appropriately...
 		
 		void QueueBroadcast(std::unique_ptr<Event> BroadcastPackage); //This Message Is Used To Send in a package for Broadcast
@@ -56,6 +60,7 @@ namespace ErmineEventSystem
 		std::vector<CursorPositionCallbackEvent>CursorPositionCallbackEventsQueue;
 		std::vector<MouseButtonCallbackEvent>MouseButtonCallbackEventsQueue;
 		std::vector<ScrollCallbackEvent>ScrollCallbackEventsQueue;
+		//Donot Forget to add destructors for these containers inside the destructor..
 
 	private:
 		//We Will Store The Subscriptions Here...
@@ -65,6 +70,7 @@ namespace ErmineEventSystem
 		std::vector<CursorPositionCallbackEventSubscription> CursorPositionCallbackEventSubscriptions;
 		std::vector<MouseButtonCallbackEventSubscription> MouseButtonCallbackEventSubscriptions;
 		std::vector<ScrollCallbackEventSubscription> ScrollCallbackEventSubscriptions;
+		//Donot Forget to add destructors for these containers inside the destructor..
 
 	private:
 		//Helper Functions For Dispatching Stuff To Right Destinations---

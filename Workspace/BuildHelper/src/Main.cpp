@@ -8,6 +8,8 @@
 #include "Symbols.h"
 #include "Example1.h"
 
+#include "EventBroadcastStation.h"
+
 int main()
 {
 	//Start Initialize Memory Leak Checking Module..
@@ -21,6 +23,8 @@ int main()
 	Example1Main();
 	//Ended Call Which Example You Want Here//
 	
+	ErmineEventSystem::EventBroadcastStation::DestroyStation(); //:> Forgot To Destroy The Station After Use.. Previously
+
 	int* n = new int[100];
 
 	//Start Print Detected Memory Leaks To File..
