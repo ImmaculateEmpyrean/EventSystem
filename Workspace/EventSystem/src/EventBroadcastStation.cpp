@@ -36,10 +36,15 @@ ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStati
 void ErmineEventSystem::EventBroadcastStation::DestroyStation()
 {
 	StationDestructionOrdered = true;
-	StationThreadObject->join();
-
-	delete StationThreadObject;
-	delete EventBroadcastStationPointer;
+	if (EventBroadcastStationPointer != nullptr)
+	{
+		if (StationThreadObject != nullptr)
+		{
+			StationThreadObject->join();
+			delete StationThreadObject;
+		}
+		delete EventBroadcastStationPointer;
+	}
 }
 
 void ErmineEventSystem::EventBroadcastStation::QueueBroadcast(std::unique_ptr<Event> BroadcastPackage)

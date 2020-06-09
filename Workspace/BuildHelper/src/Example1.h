@@ -16,7 +16,7 @@ public:
 	//Constructor
 	E1A()
 	{
-		std::unique_ptr<ErmineEventSystem::ConcreteEvent> EventObj = ErmineEventSystem::ConcreteEvent::GenerateEvent("Augustus Is The New Princeps Of Rome..");
+		std::unique_ptr<ErmineEventSystem::ConcreteEvent> EventObj = ErmineEventSystem::ConcreteEvent::GenerateEvent("This Message Is Being Circulated");
 		ErmineEventSystem::BroadcastComponent::BroadcastEvent(std::move(EventObj));
 	}
 
@@ -43,9 +43,6 @@ private:
 void Example1Main()
 {
 	E1B RecieverObject;
-	E1B RecieverObject2;
-	E1B RecieverObject3;
-
 	E1A SenderObject;
 
 	std::cin.get();

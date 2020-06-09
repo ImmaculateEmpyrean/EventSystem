@@ -1,5 +1,7 @@
 #include "TestConcreteEvent.h"
 
+#include<iostream>
+
 namespace ErmineEventSystem
 {
 	////////////////////////////////////////////////////////
