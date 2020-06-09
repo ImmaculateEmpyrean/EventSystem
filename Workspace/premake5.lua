@@ -41,7 +41,6 @@ project "BuildHelper"
 
 	includedirs
 	{
-		"EventSystem/include",
 		"EventSystem/src"
 	}
 

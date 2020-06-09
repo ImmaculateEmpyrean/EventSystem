@@ -10,13 +10,11 @@ project "EventSystem"
     files
 	{
 		"src/**.h",
-		"include/**.h",
         "src/**.cpp"
 	}
 
 	includedirs
 	{
-		"include",
 		"src"
 	}
 

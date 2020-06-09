@@ -7,11 +7,11 @@
 #include<functional>
 #include<atomic>
 
-#include "../EnumEventType.h"
+#include "EnumEventType.h"
 
-#include "../EventBroadcastStation.h"
+#include "EventBroadcastStation.h"
 
-#include "../Event.h"
+#include "Event.h"
 
 //Here x is the name of the method in THIS class...(Note Context Is Important this uses "this" Operator
 #ifndef GenCallableFromMethod(x)

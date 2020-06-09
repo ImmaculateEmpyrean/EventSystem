@@ -4,11 +4,11 @@
 #include<memory>
 #include<vector>
 
-#include "../EventBroadcastStation.h"
+#include "EventBroadcastStation.h"
 
-#include "../EnumEventType.h"
-#include "../Event.h"
-#include "../EventTypes/TestConcreteEvent.h"
+#include "EnumEventType.h"
+#include "Event.h"
+#include "EventTypes/TestConcreteEvent.h"
 
 namespace ErmineEventSystem
 {
