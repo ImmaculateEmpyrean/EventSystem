@@ -16,7 +16,7 @@ public:
 	//Constructor
 	E1A()
 	{
-		std::unique_ptr<ErmineEventSystem::ConcreteEvent> EventObj = ErmineEventSystem::ConcreteEvent::GenerateEvent("This Message Is Being BroadCasted In The System");
+		std::unique_ptr<ErmineEventSystem::ConcreteEvent> EventObj = ErmineEventSystem::ConcreteEvent::GenerateEvent("Augustus Is The New Princeps Of Rome..");
 		ErmineEventSystem::BroadcastComponent::BroadcastEvent(std::move(EventObj));
 	}
 
@@ -36,13 +36,16 @@ private:
 	void TestFunction(ErmineEventSystem::Event* EveObj)
 	{
 		auto ptr = (ErmineEventSystem::ConcreteEvent*)EveObj;
-		LogBuffer(ptr->GetMessageBuffer().c_str());
+		LogBuffer(ptr->GetMessageBuffer());
 	}
 };
 
 void Example1Main()
 {
 	E1B RecieverObject;
+	E1B RecieverObject2;
+	E1B RecieverObject3;
+
 	E1A SenderObject;
 
 	std::cin.get();

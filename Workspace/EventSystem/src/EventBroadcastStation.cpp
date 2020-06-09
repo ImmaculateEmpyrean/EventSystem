@@ -8,11 +8,8 @@ std::mutex ErmineEventSystem::EventBroadcastStation::MainMutex;
 
 void EventBroadcastStationMainRoutine()
 {
-	_sleep(1000);
-
 	while (ErmineEventSystem::EventBroadcastStation::StationDestructionOrdered == false)
 	{
-		//Remove The comments For Event Processing To Resume Normally..
 		_sleep(100);
 		auto Station = ErmineEventSystem::EventBroadcastStation::GetStation();
 		Station->DispatchMessages();
@@ -30,8 +27,6 @@ ErmineEventSystem::EventBroadcastStation* ErmineEventSystem::EventBroadcastStati
 	std::call_once(LazyInitializationFlag, []() {
 		EventBroadcastStationPointer = DBG_NEW EventBroadcastStation(); //Create A New event Broadcast Station..
 		StationThreadObject = new std::thread(EventBroadcastStationMainRoutine);
-		//std::thread NewThreadObject(EventBroadcastStationMainRoutine);
-		//NewThreadObject.detach(); //This Will Run Indefinitely I Guess No Need To Bother about It I think
 	});
 
 	std::unique_lock<std::mutex> Loc(MainMutex);//,std::adopt_lock);
@@ -50,47 +45,54 @@ void ErmineEventSystem::EventBroadcastStation::DestroyStation()
 void ErmineEventSystem::EventBroadcastStation::QueueBroadcast(std::unique_ptr<Event> BroadcastPackage)
 {
 	std::unique_lock<std::mutex> Loc(MainMutex);//, std::adopt_lock);//std::lock_guard<std::mutex> Loc(MainMutex,std::adopt_lock);
-
+	
 	ErmineEventSystem::EventType BroadcastType = BroadcastPackage->GetEventType();
+	Event* EvePtr = BroadcastPackage.release();
+
 	switch(BroadcastType)
 	{
-	case EventType::ConcreteEvent:ConcreteEventsQueue.push_back(*((ConcreteEvent*)(BroadcastPackage.release())));
+	case EventType::ConcreteEvent:ConcreteEventsQueue.push_back(*((ConcreteEvent*)(EvePtr)));
 		break;
-	case EventType::KeyCallbackEvent:KeyCallbackEventsQueue.push_back(*((KeyCallbackEvent*)(BroadcastPackage.release())));
+	case EventType::KeyCallbackEvent:KeyCallbackEventsQueue.push_back(*((KeyCallbackEvent*)(EvePtr)));
 		break;
-	case EventType::CharacterCallbackEvent:CharacterCallbackEventsQueue.push_back(*((CharacterCallbackEvent*)(BroadcastPackage.release())));
+	case EventType::CharacterCallbackEvent:CharacterCallbackEventsQueue.push_back(*((CharacterCallbackEvent*)(EvePtr)));
 		break;
-	case EventType::CursorPositionCallbackEvent:CursorPositionCallbackEventsQueue.push_back(*((CursorPositionCallbackEvent*)(BroadcastPackage.release())));
+	case EventType::CursorPositionCallbackEvent:CursorPositionCallbackEventsQueue.push_back(*((CursorPositionCallbackEvent*)(EvePtr)));
 		break;
-	case EventType::MouseButtonCallbackEvent:MouseButtonCallbackEventsQueue.push_back(*((MouseButtonCallbackEvent*)(BroadcastPackage.release())));
+	case EventType::MouseButtonCallbackEvent:MouseButtonCallbackEventsQueue.push_back(*((MouseButtonCallbackEvent*)(EvePtr)));
 		break;
-	case EventType::ScrollCallbackEvent:ScrollCallbackEventsQueue.push_back(*((ScrollCallbackEvent*)(BroadcastPackage.release())));
+	case EventType::ScrollCallbackEvent:ScrollCallbackEventsQueue.push_back(*((ScrollCallbackEvent*)(EvePtr)));
 		break;
 	default: LogBuffer("Unknown Event Type Recieved For QUeing Check Api Maybe... Dunno I should never trigger");
 	}
+	delete EvePtr;
 }
 
 void ErmineEventSystem::EventBroadcastStation::QueueSubscription(std::unique_ptr<EventSubscription> Subscription)
 {
 	std::unique_lock<std::mutex> Loc(MainMutex);//, std::adopt_lock);//std::lock_guard<std::mutex> Loc(MainMutex, std::adopt_lock);
-	auto SubscriptionType = Subscription->GetEventSubscriptionType();
 	
+	auto SubscriptionType = Subscription->GetEventSubscriptionType();
+	EventSubscription* EvePtr = Subscription.release();
+
 	switch (SubscriptionType)
 	{
-	case EventType::ConcreteEvent : ConcreteEventSubscriptions.push_back(*((ConcreteEventSubscription*)(Subscription.release())));
+	case EventType::ConcreteEvent : ConcreteEventSubscriptions.push_back(*((ConcreteEventSubscription*)(EvePtr)));
 		break;
-	case EventType::KeyCallbackEvent : KeyCallbackEventsSubscriptions.push_back(*((KeyCallbackEventSubscription*)(Subscription.release())));
+	case EventType::KeyCallbackEvent : KeyCallbackEventsSubscriptions.push_back(*((KeyCallbackEventSubscription*)(EvePtr)));
 		break;
-	case EventType::CharacterCallbackEvent: CharacterCallbackEventSubscriptions.push_back(*((CharacterCallbackEventSubscription*)(Subscription.release())));
+	case EventType::CharacterCallbackEvent: CharacterCallbackEventSubscriptions.push_back(*((CharacterCallbackEventSubscription*)(EvePtr)));
 		break;
-	case EventType::CursorPositionCallbackEvent: CursorPositionCallbackEventSubscriptions.push_back(*((CursorPositionCallbackEventSubscription*)(Subscription.release())));
+	case EventType::CursorPositionCallbackEvent: CursorPositionCallbackEventSubscriptions.push_back(*((CursorPositionCallbackEventSubscription*)(EvePtr)));
 		break;
-	case EventType::MouseButtonCallbackEvent: MouseButtonCallbackEventSubscriptions.push_back(*((MouseButtonCallbackEventSubscription*)(Subscription.release())));
+	case EventType::MouseButtonCallbackEvent: MouseButtonCallbackEventSubscriptions.push_back(*((MouseButtonCallbackEventSubscription*)(EvePtr)));
 		break;
-	case EventType::ScrollCallbackEvent: ScrollCallbackEventSubscriptions.push_back(*((ScrollCallbackEventSubscription*)(Subscription.release())));
+	case EventType::ScrollCallbackEvent: ScrollCallbackEventSubscriptions.push_back(*((ScrollCallbackEventSubscription*)(EvePtr)));
 		break;
-	default: LogBuffer("Unknown Subscription Type Recieved For QUeing Check Api Maybe... Dunno I should never trigger");
+	default: LogBuffer("Unknown Subscription Type Recieved For Queing Check Api Maybe... Dunno I should never trigger");
 	}
+
+	delete EvePtr;
 }
 
 
