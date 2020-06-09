@@ -31,8 +31,15 @@ project "EventSystem"
     files
 	{
 		"%{prj.name}/src/**.h",
+		"%{prj.name}/include/**.h",
         "%{prj.name}/src/**.cpp"
-    }
+	}
+
+	includedirs
+	{
+		"%{prj.name}/include",
+		"%{prj.name}/src"
+	}
 
     defines
 	{
@@ -86,7 +93,8 @@ project "BuildHelper"
 
 	includedirs
 	{
-		"EventSystem/src/**.h"
+		"EventSystem/include",
+		"EventSystem/src"
 	}
 
 	links
@@ -100,6 +108,10 @@ project "BuildHelper"
 	filter "configurations:Debug"
 		runtime "Debug"
 		symbols "on"
+		defines
+		{
+			"ER_DEBUG_DEVELOP"
+		}
 
 	filter "configurations:StaticLibRelease"
 		runtime "Release"
@@ -110,3 +122,9 @@ project "BuildHelper"
 		optimize "on"
 
 	filter ""
+
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS",
+		"USINGErmineEventSystem"
+	}
