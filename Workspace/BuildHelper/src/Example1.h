@@ -1,4 +1,7 @@
 #pragma once
+//This Example Is But A Basic Example It Is Used To Demonstrate The Working Of The Event System In Real World Application .. :> Also USed as a Reference For Syntax..
+//It Is Recommended Real World Applications Use The Reciever And Broadcast Components Instead Of Fiddling Aroud With All Kinds Of Stuff..
+
 #include<iostream>
 #include<vector>
 #include<string>
@@ -28,7 +31,7 @@ public:
 	}
 
 private:
-	std::atomic<bool> Flag = true;
+	std::atomic<bool> Flag = true; //If This Flag Is Set To False The TestFunction Wont Be Called .. 
 
 	void TestFunction(ErmineEventSystem::Event* EveObj)
 	{
